@@ -1,0 +1,682 @@
+:root {
+  /* Tema Claro - Estilo Minimalista */
+  --bg-color: #fafafa;
+  --text-primary: #111111;
+  --text-secondary: #666666;
+  --accent: #000000;
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --font-family: 'Inter', sans-serif;
+  --glass: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme='dark'] {
+  /* Tema Oscuro - Estilo Moderno Profundo */
+  --bg-color: #050505;
+  --text-primary: #ededed;
+  --text-secondary: #a0a0a0;
+  --accent: #ffffff;
+  --card-bg: #111111;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --glass: rgba(10, 10, 10, 0.7);
+}
+
+/* --- Base y Reset --- */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  margin: 0;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden; /* Evita scroll en la home */
+}
+
+/* --- Cursor Magnético Premium (Solo activo en PC/Mouse) --- */
+@media (pointer: fine) {
+  body, a, button, .project-row, .corner-btn, .close-panel {
+    cursor: none !important;
+  }
+  
+  .custom-cursor-dot {
+    position: fixed; width: 6px; height: 6px;
+    background-color: var(--text-primary);
+    border-radius: 50%; transform: translate(-50%, -50%);
+    pointer-events: none; z-index: 99999; /* Corregido para verse sobre modales */
+  }
+  .custom-cursor-outline {
+    position: fixed; width: 35px; height: 35px;
+    border: 1.5px solid var(--text-secondary);
+    border-radius: 50%; pointer-events: none; z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: width 0.25s, height 0.25s, background-color 0.25s, border-color 0.25s;
+  }
+  .custom-cursor-outline.hovering {
+    width: 55px; height: 55px;
+    background-color: rgba(139, 92, 246, 0.1);
+    border-color: #8b5cf6; backdrop-filter: blur(2px);
+  }
+}
+
+.app-container {
+  max-width: 100%;
+  width: 100%; height: 100vh;
+  margin: 0; padding: 0 5vw 120px;
+  box-sizing: border-box;
+  display: flex; flex-direction: column;
+}
+
+/* Toque Premium: Efecto Monitor CRT con resplandor en los bordes */
+.crt-effect {
+  position: relative;
+  box-shadow: inset 0 0 50px -10px rgba(139, 92, 246, 0.15);
+}
+.crt-effect::after {
+  content: ""; position: fixed; inset: 0;
+  background-image: repeating-linear-gradient(rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 1px, transparent 1px, transparent 2px);
+  pointer-events: none; z-index: 1999; opacity: 0.1;
+}
+
+/* --- Header & Glassmorphism --- */
+header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 0; position: fixed; top: 0; left: 0; right: 0;
+  padding: 24px 5vw; background: var(--glass);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--card-border);
+  z-index: 1000; margin-bottom: 60px;
+}
+header h1 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.theme-toggle {
+  background: none; border: 1px solid var(--card-border);
+  color: var(--text-primary); border-radius: 50%;
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.theme-toggle:hover { background: var(--card-bg); border-color: var(--text-primary); }
+
+/* --- Home Hero (Punto Focal Central) --- */
+.home-hero {
+  position: absolute; inset: 0;
+  width: 100%; height: 100vh;
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1; overflow: hidden;
+  background: repeating-linear-gradient(45deg, rgba(255, 165, 0, 0.05), rgba(255, 165, 0, 0.05) 10px, rgba(255, 255, 255, 0.05) 10px, rgba(255, 255, 255, 0.05) 20px);
+}
+
+.home-hero::before,
+.home-hero::after {
+  content: ''; position: absolute; inset: -50px;
+  background-image: repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(255, 165, 0, 0.1) 1px, rgba(255, 165, 0, 0.1) 2px);
+  opacity: 0.3; filter: blur(5px); animation: moveLines 20s linear infinite;
+  pointer-events: none;
+}
+.home-hero::after {
+  background-image: repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(255, 255, 255, 0.1) 1px, rgba(255, 255, 255, 0.1) 2px);
+  animation: moveLines 25s linear infinite;
+}
+
+@keyframes moveLines {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+}
+
+.hero-center-group {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.profile-pic {
+  width: 220px; height: 220px; border-radius: 30%;
+  object-fit: cover; border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px -5px rgba(139, 92, 246, 0.3);
+  animation: float 6s ease-in-out infinite; margin-bottom: 30px;
+}
+@keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(2deg); } }
+
+.hero-text-block h2 { font-size: 4rem; line-height: 1.1; letter-spacing: -0.06em; margin-bottom: 10px; margin-top: 0; }
+.hero-text-block p { font-size: 1.4rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto; }
+
+/* Botones de Esquina Modernos */
+.corner-btn {
+  position: absolute; background: none; border: 1px solid var(--card-border);
+  color: var(--text-primary); font-weight: 600; font-size: 1rem;
+  padding: 14px 28px; border-radius: 100px;
+  display: flex; align-items: center; gap: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow);
+  z-index: 10;
+}
+.corner-btn:hover {
+  transform: scale(1.05) rotate(1deg);
+  border-color: #8b5cf6; color: #8b5cf6;
+  box-shadow: var(--shadow-hover);
+}
+.corner-btn:hover::before {
+  content: ''; position: absolute; inset: -2px;
+  border-radius: 100px; background: linear-gradient(45deg, #8b5cf6, #ec4899);
+  z-index: -1; filter: blur(10px); opacity: 0.3;
+}
+.top-left { top: 120px; left: 5vw; }
+.top-right { top: 120px; right: 5vw; }
+.bottom-left { bottom: 60px; left: 5vw; }
+.bottom-right { bottom: 60px; right: 5vw; }
+
+/* --- Panel Overlay para Secciones (Ventanas Modales) --- */
+.panel-overlay {
+  position: fixed; 
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.65); 
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 9999;
+  display: flex; justify-content: center; align-items: center;
+  padding: 20px; 
+  box-sizing: border-box;
+}
+
+.panel-content {
+  background: var(--card-bg); 
+  padding: 45px; 
+  border-radius: 24px;
+  width: 100%; max-width: 850px; 
+  height: auto; 
+  max-height: 85vh; 
+  position: relative; 
+  border: 1px solid var(--card-border);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+  display: flex; flex-direction: column;
+  color: var(--text-primary);
+}
+
+.panel-header {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--card-border); 
+  padding-bottom: 20px; 
+  margin-bottom: 15px; /* Un poco menos de margen para compensar */
+  flex-shrink: 0; /* ¡Clave! Evita que el header se aplaste si el contenido es muy largo */
+}
+.panel-title-block { display: flex; align-items: center; gap: 15px; }
+.panel-header h2 { font-size: 2rem; font-weight: 800; margin: 0; }
+.close-panel {
+  background: none; border: none; color: var(--text-primary);
+  transition: color 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+.close-panel:hover { color: #8b5cf6; transform: rotate(90deg); }
+
+.panel-body { 
+  flex: 1; 
+  overflow-y: auto; 
+  padding-right: 15px; 
+  padding-top: 15px; /* ¡Solución principal! Da espacio para que las letras altas no choquen */
+  min-height: 0; /* Regla de oro para que el scroll en flexbox no rompa la estructura */
+}
+
+/* Scrollbar personalizado */
+.panel-body::-webkit-scrollbar { width: 6px; }
+.panel-body::-webkit-scrollbar-track { background: transparent; }
+.panel-body::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 10px; }
+.panel-body::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+/* --- Estilos Generales Compartidos (Títulos y Textos Centrados) --- */
+.section-intro, .contact-content-wrapper {
+  margin-bottom: 35px;
+  padding: 0 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section-heading, .contact-heading {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  margin-top: 25px; /* Empuja el texto levemente hacia abajo */
+  color: var(--text-primary);
+  line-height: 1.4; /* Suaviza el interlineado para evitar que se corten los bordes */
+  text-align: center;
+}
+
+.section-subheading, .about-text, .contact-subheading {
+  color: var(--text-secondary);
+  font-size: 1.15rem;
+  line-height: 1.65;
+  max-width: 650px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* --- Sobre Mí --- */
+.about-text {
+  margin-bottom: 35px;
+}
+
+.about-actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.primary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--text-primary);
+  color: var(--bg-color);
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.primary-btn:hover {
+  background: rgba(139, 92, 246, 0.1);
+  color: #8b5cf6;
+  border-color: #8b5cf6;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px -5px rgba(139, 92, 246, 0.3);
+}
+
+/* --- Proyectos (Totalmente Centrados) --- */
+.projects-grid-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 10px;
+}
+
+.project-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;    
+  text-align: center;     
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: #8b5cf6;
+  box-shadow: 0 15px 30px -5px rgba(139, 92, 246, 0.2);
+  background: rgba(139, 92, 246, 0.04);
+}
+
+.project-info {
+  padding-right: 0;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.project-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: var(--text-primary);
+}
+
+.project-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  margin: 0 0 18px 0;
+  line-height: 1.5;
+}
+
+.project-tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+  gap: 10px;
+}
+
+.tech-tag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 100px;
+  background: rgba(139, 92, 246, 0.08);
+  color: #8b5cf6;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.project-links {
+  display: flex;
+  flex-direction: row; 
+  justify-content: center; 
+  gap: 12px;
+  width: 100%;
+}
+
+.project-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+}
+
+.project-link:hover {
+  background: var(--text-primary);
+  color: var(--bg-color);
+  border-color: var(--text-primary);
+}
+
+/* --- Panel de Contacto --- */
+.contact-links-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 24px; 
+  width: 100%;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  color: var(--text-primary);
+}
+
+.contact-card:hover {
+  transform: translateY(-8px);
+  border-color: #8b5cf6;
+  box-shadow: 0 15px 30px -5px rgba(139, 92, 246, 0.2);
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.contact-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px; 
+  height: 55px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.contact-card.mail:hover .contact-icon-wrapper {
+  background: rgba(234, 67, 53, 0.12);
+  color: #ea4335;
+}
+.contact-card.linkedin:hover .contact-icon-wrapper {
+  background: rgba(10, 102, 194, 0.12);
+  color: #0a66c2;
+}
+.contact-card.github:hover .contact-icon-wrapper {
+  background: rgba(139, 92, 246, 0.12);
+  color: #8b5cf6;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-label {
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.contact-value {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-top: 5px;
+}
+
+/* --- Animación de Entrada Suave con Zoom --- */
+.fade-in { 
+  animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+  opacity: 0; 
+}
+@keyframes popIn { 
+  from { opacity: 0; transform: scale(0.95) translateY(10px); } 
+  to { opacity: 1; transform: scale(1) translateY(0); } 
+}
+
+/* --- Responsividad --- */
+@media (max-width: 1024px) {
+  .hero-text-block h2 { font-size: 2.8rem; }
+  .profile-pic { width: 180px; height: 180px; }
+  
+  .top-left { top: 100px; left: 24px; }
+  .top-right { top: 100px; right: 24px; }
+  .bottom-left { bottom: 40px; left: 24px; }
+  .bottom-right { bottom: 40px; right: 24px; }
+
+  .panel-content { padding: 35px 25px; }
+}
+
+@media (max-width: 900px) {
+  .contact-links-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-heading, .contact-heading {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-text-block h2 { font-size: 2.2rem; }
+  .hero-text-block p { font-size: 1.1rem; padding: 0 15px; }
+  .profile-pic { width: 150px; height: 150px; margin-bottom: 20px; }
+  
+  .corner-btn { padding: 10px 16px; font-size: 0.85rem; }
+  .top-left { top: 90px; left: 10px; }
+  .top-right { top: 90px; right: 10px; }
+  .bottom-left { bottom: 20px; left: 10px; }
+  .bottom-right { bottom: 20px; right: 10px; }
+  
+  .project-links {
+    flex-direction: column;
+  }
+  
+  .contact-links-grid {
+    grid-template-columns: 1fr; 
+  }
+}
+
+/* --- Carrusel 3D de Skills --- */
+.scene-3d-container {
+  /* La perspectiva le da profundidad 3D al contenedor */
+  perspective: 1000px;
+  width: 100%;
+  height: 350px; /* Altura suficiente para que gire sin cortarse */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  margin-top: 20px;
+}
+
+.carousel-3d {
+  width: 80px; 
+  height: 80px;
+  position: relative;
+  /* preserve-3d es clave para que los hijos mantengan el espacio 3D */
+  transform-style: preserve-3d;
+  /* Animación infinita (25 segundos por vuelta) */
+  animation: rotateCarousel 25s linear infinite;
+}
+
+/* Pausa la rotación si el usuario le pasa el mouse por arriba */
+.scene-3d-container:hover .carousel-3d {
+  animation-play-state: paused;
+}
+
+.skill-3d-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
+  background: #ffffff; /* Círculo blanco como pediste */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  /* Backface-visibility visible permite verlos cuando van por atrás del anillo */
+  backface-visibility: visible;
+  transition: transform 0.3s ease;
+}
+
+.skill-3d-item:hover {
+  background: rgba(139, 92, 246, 0.1); /* Efecto hover violeta sutil */
+  border-color: #8b5cf6;
+}
+
+.skill-3d-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Evita que la imagen se deforme o se arrastre por accidente */
+  pointer-events: none; 
+}
+
+/* Keyframes de la rotación infinita */
+@keyframes rotateCarousel {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+/* Responsividad para el Carrusel 3D */
+@media (max-width: 768px) {
+  .scene-3d-container {
+    height: 280px;
+    /* Usamos scale para achicar todo el sistema 3D sin romper la matemática */
+    transform: scale(0.75); 
+  }
+}
+
+@media (max-width: 480px) {
+  .scene-3d-container {
+    height: 250px;
+    transform: scale(0.6); 
+  }
+}
+/* --- Header Actions (Agrupa el toggle y la hamburguesa) --- */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.hamburger-btn {
+  display: none; /* Oculto en PC */
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  padding: 5px;
+  z-index: 1001; /* Siempre por encima del menú móvil */
+  transition: color 0.3s;
+}
+
+.hamburger-btn:hover {
+  color: #8b5cf6;
+}
+
+/* --- Menú Móvil (Oculto por defecto) --- */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-color); /* Toma el color de fondo de tu tema */
+  z-index: 900; /* Debajo del header pero arriba del resto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-menu-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 0 10vw;
+}
+
+.mobile-nav-btn {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 18px 25px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-btn:active {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: #8b5cf6;
+  color: #8b5cf6;
+  transform: scale(0.98);
+}
+
+/* --- Media Queries (Móviles) --- */
+@media (max-width: 768px) {
+  /* Aparece la hamburguesa */
+  .hamburger-btn {
+    display: flex;
+  }
+  
+  /* Desaparecen los botones de las esquinas */
+  .corner-btn {
+    display: none !important;
+  }
+  
+  /* Ajustamos el z-index del header para que el menú no lo tape */
+  header {
+    z-index: 1001;
+    background: transparent;
+    border-bottom: none;
+  }
+}
