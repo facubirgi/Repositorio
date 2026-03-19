@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Github, ExternalLink, Mail, Linkedin, X, Download, User, BarChart, Rocket, Send } from 'lucide-react';
+import { Github, ExternalLink, Mail, Linkedin, X, Download, User, BarChart, Rocket, Send, ChevronLeft, ChevronRight } from 'lucide-react';
 import { portfolioData } from '../data';
 
 // --- Home Screen: Botones de Esquina y Tu Foto Central ---
@@ -110,6 +110,30 @@ export const SkillsPanel = ({ setActivePanel }) => {
   );
 };
 
+const ProjectCarousel = ({ images }) => {
+  const [current, setCurrent] = useState(0);
+
+  const prev = () => setCurrent(i => (i - 1 + images.length) % images.length);
+  const next = () => setCurrent(i => (i + 1) % images.length);
+
+  return (
+    <div className="carousel">
+      <img src={images[current]} alt={`Captura ${current + 1}`} className="carousel-img" />
+      <button className="carousel-btn carousel-btn-left" onClick={prev} aria-label="Anterior">
+        <ChevronLeft size={20} />
+      </button>
+      <button className="carousel-btn carousel-btn-right" onClick={next} aria-label="Siguiente">
+        <ChevronRight size={20} />
+      </button>
+      <div className="carousel-dots">
+        {images.map((_, i) => (
+          <span key={i} className={`carousel-dot${i === current ? ' active' : ''}`} onClick={() => setCurrent(i)} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export const ProjectsPanel = ({ setActivePanel }) => {
   return (
     <CornerPanelBase title="Proyectos" setActivePanel={setActivePanel} icon={Rocket}>
@@ -123,12 +147,13 @@ export const ProjectsPanel = ({ setActivePanel }) => {
       <div className="projects-grid-panel">
         {portfolioData.projects.map((project, index) => (
           <div key={index} className="project-card">
-            
+
+            {project.images && <ProjectCarousel images={project.images} />}
+
             <div className="project-info">
               <h4 className="project-title">{project.name}</h4>
               <p className="project-desc">{project.description}</p>
-              
-              {/* Etiquetas de tecnologías */}
+
               <div className="project-tech-tags">
                 {project.techs.split(', ').map((tech, i) => (
                   <span key={i} className="tech-tag">{tech}</span>
@@ -146,7 +171,7 @@ export const ProjectsPanel = ({ setActivePanel }) => {
                 </a>
               )}
             </div>
-            
+
           </div>
         ))}
       </div>

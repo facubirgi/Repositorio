@@ -26,7 +26,8 @@ export const portfolioData = {
       fullDescription: "Sistema creado con NestJS en el backend y React en el frontend, desplegado en Railway y Netlify.",
       techs: "NestJS, React, PostgreSQL, Docker, TypeOrm, TailwindCss",
       repo: "https://github.com/facubirgi/ERP---Sistema-Saas",
-      link: "#"
+      link: "#",
+      images: ["/cap1.png", "/cap2.png", "/cap3.png", "/cap4.png"]
     },
     {
       name: "CRM para gestion de clientes y operaciones",
