@@ -2,8 +2,8 @@
 export const portfolioData = {
   title: "Fullstack Developer",
   name: "Facundo Birgi",
-  about: "Desarrollador Fullstack con enfoque en crear experiencias digitales fluidas y escalables. Me apasiona resolver problemas reales. Conoce más acerca de mí.",
-  cv_link: "/CVFacu.pdf",
+  about: "Desarrollador Fullstack con enfoque en crear experiencias digitales fluidas y escalables. Me apasiona resolver problemas reales y siempre estoy en constante aprendizaje.",
+  cv_link: "/Cvfacu2.pdf",
 
   // Lista plana de habilidades con logotipos visuales
   skills: [
@@ -30,7 +30,7 @@ export const portfolioData = {
     },
     {
       name: "CRM para gestion de clientes y operaciones",
-      description: "Sistema para estudios contables y de abogados que necesitan gestionar clientes, casos y tareas.Desplegado en Railway y Netlify.",
+      description: "Sistema para estudios contables y de abogados que necesitan gestionar clientes, casos y tareas. Desplegado en Railway y Netlify.",
       fullDescription: "Panel administrativo donde el usuario puede gestionar clientes, casos, tareas y generar reportes. Desarrollado con Next.js, NestJS y PostgreSQL.",
       techs: "Next.js, NestJS, PostgreSQL, TailwindCss, Docker, TypeOrm",
       repo: "https://github.com/facubirgi/Blatter-y-Asociados",
@@ -39,8 +39,8 @@ export const portfolioData = {
     {
       name: "Agente de Ia para Ventas y Soporte",
       description: "Chatbot inteligente para mejorar la experiencia del cliente en sitios web de comercio electrónico.",
-      fullDescription: "Agente de IA desarrollado con Python y FastAPI, integrado con OpenAI para procesamiento de lenguaje natural. Desplegado en Railway.",
-      techs: "Python, FastAPI, OpenAI, LangChain, GraphLang, Railway",
+      fullDescription: "Agente de IA desarrollado con Python y Nodejs integrado con OpenAI para procesamiento de lenguaje natural. Desplegado en Railway.",
+      techs: "Python, Nodejs, OpenAI, LangChain, GraphLang, Railway",
       repo: "https://github.com/facubirgi/laburo-agent-ia",
       link: "#"
     }

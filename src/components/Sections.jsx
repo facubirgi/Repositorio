@@ -14,7 +14,7 @@ export const Hero = ({ setActivePanel }) => (
       <div className="hero-text-block">
         {/* Título avanzado y premium */}
         <h2>{portfolioData.title}</h2>
-        <p>{portfolioData.name} - Conoce más acerca de mí</p>
+        <p>{portfolioData.name}</p>
       </div>
     </div>
     
