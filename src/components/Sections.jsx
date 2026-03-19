@@ -114,7 +114,7 @@ export const ProjectsPanel = ({ setActivePanel }) => {
   return (
     <CornerPanelBase title="Proyectos" setActivePanel={setActivePanel} icon={Rocket}>
       <div className="section-intro">
-        <h3 className="section-heading">Mi trabajo reciente</h3>
+        <h3 className="section-heading">Mis trabajos recientes</h3>
         <p className="section-subheading">
           Una selección de proyectos donde aplico mis conocimientos para crear soluciones reales.
         </p>
@@ -159,9 +159,9 @@ export const ProjectsPanel = ({ setActivePanel }) => {
 export const ContactPanel = ({ setActivePanel }) => (
   <CornerPanelBase title="Contacto" setActivePanel={setActivePanel} icon={Send}>
     <div className="contact-content-wrapper"> {/* Nuevo contenedor para agrupar textos */}
-      <h3 className="contact-heading">Hablemos de tu próximo proyecto</h3> {/* Clase específica para el h3 */}
+      <h3 className="contact-heading">Si queres contactarme o ver mas sobre mis proyectos</h3> {/* Clase específica para el h3 */}
       <p className="contact-subheading">
-        ¿Tienes una idea en mente, buscas un desarrollador Fullstack para tu equipo o simplemente quieres conectar? ¡Escríbeme!
+        ¿Tenes una idea en mente, buscas un desarrollador Fullstack para tu equipo o simplemente quieres conectar? Escribime!
       </p>
     </div>
 
